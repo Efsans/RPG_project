@@ -193,13 +193,15 @@ export default function Home() {
       <div className="flex h-screen w-screen flex-col items-center justify-center bg-zinc-900 gap-8">
         <button 
           onClick={() => setRole("dev")}
-          className="px-12 py-4 bg-zinc-800 text-zinc-400 rounded-md border border-zinc-700 hover:bg-zinc-700 transition-colors"
+          style={{ touchAction: 'manipulation' }}
+          className="px-12 py-6 bg-zinc-800 text-zinc-400 text-xl rounded-md border border-zinc-700 hover:bg-zinc-700 active:bg-zinc-600 transition-colors select-none"
         >
           DEV
         </button>
         <button 
           onClick={() => setRole("cliente")}
-          className="px-12 py-4 bg-zinc-800 text-zinc-400 rounded-md border border-zinc-700 hover:bg-zinc-700 transition-colors"
+          style={{ touchAction: 'manipulation' }}
+          className="px-12 py-6 bg-zinc-800 text-zinc-400 text-xl rounded-md border border-zinc-700 hover:bg-zinc-700 active:bg-zinc-600 transition-colors select-none"
         >
           CLIENTE
         </button>
@@ -225,7 +227,7 @@ export default function Home() {
 
       {/* PAINEL DO MESTRE (SIDEBAR SECA SEM TEXTO) */}
       {role === "dev" && (
-        <div className="w-20 h-full bg-zinc-950 border-r border-zinc-800 flex flex-col items-center py-8 gap-8 shadow-xl z-20">
+        <div className="w-16 md:w-20 h-full bg-zinc-950 border-r border-zinc-800 flex flex-col items-center py-4 md:py-8 gap-6 md:gap-8 shadow-xl z-20">
           <div 
             onPointerDown={(e) => handleTemplateDown(e, "dev", "bg-black")}
             onPointerMove={handleTemplateMove}
@@ -247,7 +249,7 @@ export default function Home() {
       )}
 
       {/* ÁREA DO GRID (CENTRALIZADA) */}
-      <div className="flex-1 flex items-center justify-center relative p-8">
+      <div className="flex-1 flex items-center justify-center relative p-2 md:p-8 touch-none">
         {/* O Grid (Tabuleiro) discreto */}
         <div 
           ref={boardRef}
