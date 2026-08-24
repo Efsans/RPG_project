@@ -18,9 +18,9 @@ export default function MestreLogin() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-zinc-950 text-zinc-100 p-4">
-      <div className="w-full max-w-sm p-6 bg-zinc-900 border border-zinc-800 rounded-lg shadow-xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">Acesso do Mestre</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="w-full max-w-sm p-6 surface-panel">
+        <h1 className="font-display text-2xl mb-6 text-center">Acesso do Mestre</h1>
         
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
@@ -29,7 +29,7 @@ export default function MestreLogin() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 bg-zinc-950 border border-zinc-700 rounded text-zinc-100 focus:outline-none focus:border-red-900"
+              className="w-full p-2 surface-input"
               placeholder="Digite a senha..."
               required
             />
@@ -39,7 +39,7 @@ export default function MestreLogin() {
           
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-red-900 hover:bg-red-800 text-white font-bold rounded transition-colors"
+            className="w-full py-2 px-4 btn-blood"
           >
             Entrar
           </button>

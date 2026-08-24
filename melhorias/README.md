@@ -11,6 +11,8 @@ Não substitui o livro de regras. Serve para **priorizar o que falta**, **corrig
 | [infraestrutura.md](./infraestrutura.md) | VTT, Next.js, Supabase, auth, persistência |
 | [mecanicas.md](./mecanicas.md) | Sistema Piratas e Cavaleiros (regras, furos, fechamento) |
 | [backlog.md](./backlog.md) | Lista priorizada para ir riscando |
+| [visual.md](./visual.md) | Padrão visual, relicário e dados 3D |
+| [nome.md](./nome.md) | Título oficial até segunda ordem |
 
 ## Como usar
 

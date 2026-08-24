@@ -15,7 +15,7 @@ interface TabBarProps {
 
 export default function TabBar({ tabs, activeTab, onTabChange }: TabBarProps) {
   return (
-    <div className="flex border-b border-zinc-700 bg-zinc-900">
+    <div className="flex border-b border-[#3a3226]" style={{ background: "#14110d" }}>
       {tabs.map((tab) => (
         <button
           key={tab.id}

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import TabBar from "@/components/ui/TabBar";
 import Accordion from "@/components/ui/Accordion";
-import DiceRoller from "@/components/ficha/DiceRoller";
+import DiceReliquary from "@/components/dados/DiceReliquary";
 
 export default function MestreDashboard() {
   const [activeTab, setActiveTab] = useState("entities");
@@ -17,7 +17,7 @@ export default function MestreDashboard() {
   ];
 
   return (
-    <div className="flex flex-col h-screen bg-zinc-950 text-zinc-100 overflow-hidden">
+    <div className="flex flex-col h-screen overflow-hidden" style={{ color: "var(--bone)" }}>
       {/* Top Bar / Tab Bar */}
       <TabBar tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
@@ -93,15 +93,15 @@ export default function MestreDashboard() {
       </div>
 
       {/* Footer Bar */}
-      <footer className="h-12 border-t border-zinc-800 bg-zinc-900 flex items-center px-4 shrink-0 justify-between">
-        <div className="flex items-center space-x-2">
-          <DiceRoller />
-        </div>
-        <div className="text-sm text-zinc-400 flex-1 ml-4 truncate">
+      <footer className="h-[7.5rem] md:h-28 border-t border-[#3a3226] flex items-center px-3 md:px-6 shrink-0 justify-between gap-3" style={{ background: "#14110d" }}>
+        <div className="text-xs md:text-sm flex-1 truncate min-w-0" style={{ color: "#9c8b6e" }}>
           [LOG] Chefe Tribal entrou na sala.
         </div>
-        <div>
-          <button className="px-4 py-1 bg-green-700 hover:bg-green-600 rounded text-sm font-bold ml-2">
+        <div className="-mt-8 md:-mt-10">
+          <DiceReliquary sides={20} size="pocket" />
+        </div>
+        <div className="flex-1 flex justify-end">
+          <button className="px-4 py-1 btn-brass text-sm">
             Abrir Sala
           </button>
         </div>

@@ -1,4 +1,6 @@
-# Livro de Regras: Piratas e Cavaleiros (Nome Temporário)
+# Livro de Regras: O Navio do Pirata que Cai (NPC)
+
+Nome da obra até segunda ordem. Sigla de propósito: **NPC**.
 
 Este diretório contém as regras do sistema customizado, construído para o VTT Privado.
 

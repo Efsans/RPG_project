@@ -45,9 +45,9 @@ export default function JogadorLogin() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-zinc-950 text-zinc-100 p-4">
-      <div className="w-full max-w-sm p-6 bg-zinc-900 border border-zinc-800 rounded-lg shadow-xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className="w-full max-w-sm p-6 surface-panel">
+        <h1 className="font-display text-2xl mb-6 text-center">
           {isRegister ? "Criar Conta" : "Login de Jogador"}
         </h1>
         
@@ -58,7 +58,7 @@ export default function JogadorLogin() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full p-2 bg-zinc-950 border border-zinc-700 rounded text-zinc-100 focus:outline-none focus:border-red-900"
+              className="w-full p-2 surface-input"
               placeholder="Nome de usuário"
               required
             />
@@ -70,7 +70,7 @@ export default function JogadorLogin() {
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 bg-zinc-950 border border-zinc-700 rounded text-zinc-100 focus:outline-none focus:border-red-900"
+              className="w-full p-2 surface-input"
               placeholder="Sua senha"
               required
             />
@@ -81,7 +81,7 @@ export default function JogadorLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-red-900 hover:bg-red-800 text-white font-bold rounded transition-colors disabled:opacity-50"
+            className="w-full py-2 px-4 btn-blood disabled:opacity-50"
           >
             {loading ? "Carregando..." : (isRegister ? "Registrar" : "Entrar")}
           </button>
@@ -90,7 +90,7 @@ export default function JogadorLogin() {
         <div className="mt-4 text-center">
           <button 
             onClick={() => setIsRegister(!isRegister)}
-            className="text-sm text-zinc-400 hover:text-zinc-200"
+            className="text-sm btn-ghost-rpg"
           >
             {isRegister ? "Já tem uma conta? Faça login" : "Não tem conta? Registre-se"}
           </button>

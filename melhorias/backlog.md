@@ -43,3 +43,4 @@ Legenda: `[ ]` aberto · `[x]` feito · `P0` próxima sessão · `P1` esta seman
 - [x] Review inicial (21/08/2026)
 - [x] Manual de melhorias
 - [x] Separação infra vs mecânicas
+- [x] Padrão visual (latão/sangue) + relicário + tray Three.js leve
