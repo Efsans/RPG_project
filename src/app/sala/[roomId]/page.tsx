@@ -6,10 +6,14 @@ import { supabase } from "@/lib/supabase";
 
 type TokenData = {
   id: string;
-  x: number;
-  y: number;
-  color: string;
-  owner: "dev" | "cliente";
+  pos_x: number;
+  pos_y: number;
+  token_color: string;
+  label: string;
+  hp: number;
+  max_hp: number;
+  name: string;
+  type: "character" | "entity"; // para saber qual tabela atualizar
 };
 
 export default function Sala() {
@@ -19,56 +23,63 @@ export default function Sala() {
 
   const roomId = params.roomId as string;
   const role = searchParams.get("role") as "dev" | "cliente" | null;
-  const roomCode = searchParams.get("code"); // Apenas dev recebe isso na criação
+  const roomCode = searchParams.get("code");
 
   const [tokens, setTokens] = useState<TokenData[]>([]);
   const [loading, setLoading] = useState(true);
   
-  // Estado de Drag de Tokens Existentes
   const [draggingTokenId, setDraggingTokenId] = useState<string | null>(null);
   
-  // Estado de Drag de Novos Tokens (Template sendo puxado da barra)
-  const [dragTemplate, setDragTemplate] = useState<{ color: string; owner: "dev" | "cliente"; clientX: number; clientY: number } | null>(null);
-
   const boardRef = useRef<HTMLDivElement>(null);
   const dragStartPos = useRef({ x: 0, y: 0 });
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
   
   const tokensRef = useRef<TokenData[]>([]);
 
-  // Validar se tem roomId e role
   useEffect(() => {
     if (!roomId || !role) {
       router.push("/lobby");
     }
   }, [roomId, role, router]);
 
-  // Sincronizar ref com state
   useEffect(() => {
     tokensRef.current = tokens;
   }, [tokens]);
 
-  // Carregar dados iniciais do banco
   useEffect(() => {
     if (!roomId) return;
 
     const fetchInitialData = async () => {
-      const { data, error } = await supabase
-        .from("map_states")
-        .select("tokens")
-        .eq("room_id", roomId)
-        .single();
+      const [charsRes, entitiesRes] = await Promise.all([
+        supabase.from("characters").select("*").eq("room_id", roomId),
+        supabase.from("entities").select("*").eq("room_id", roomId)
+      ]);
       
-      if (!error && data?.tokens) {
-        setTokens(data.tokens as TokenData[]);
+      const allTokens: TokenData[] = [];
+      
+      if (charsRes.data) {
+        allTokens.push(...charsRes.data.map(c => ({
+          id: c.id, pos_x: c.pos_x, pos_y: c.pos_y, 
+          token_color: c.token_color, label: c.label || c.name.substring(0,3), 
+          hp: c.hp, max_hp: c.max_hp, name: c.name, type: "character" as const
+        })));
       }
+      
+      if (entitiesRes.data) {
+        allTokens.push(...entitiesRes.data.map(e => ({
+          id: e.id, pos_x: e.pos_x, pos_y: e.pos_y, 
+          token_color: e.token_color, label: e.label || e.name.substring(0,3), 
+          hp: e.hp, max_hp: e.max_hp, name: e.name, type: "entity" as const
+        })));
+      }
+
+      setTokens(allTokens);
       setLoading(false);
     };
 
     fetchInitialData();
   }, [roomId]);
 
-  // Configurar Realtime
   useEffect(() => {
     if (!roomId || !role) return;
 
@@ -81,22 +92,29 @@ export default function Sala() {
       .on("broadcast", { event: "token_move" }, (payload) => {
         const { id, x, y } = payload.payload;
         setTokens((prev) =>
-          prev.map((t) => (t.id === id ? { ...t, x, y } : t))
+          prev.map((t) => (t.id === id ? { ...t, pos_x: x, pos_y: y } : t))
         );
       })
       .on("broadcast", { event: "sync_request" }, () => {
-        channel.send({
-          type: "broadcast",
-          event: "sync_response",
-          payload: tokensRef.current,
-        });
+        if (role === "dev") {
+          channel.send({
+            type: "broadcast",
+            event: "sync_response",
+            payload: tokensRef.current,
+          });
+        }
       })
       .on("broadcast", { event: "sync_response" }, (payload) => {
-        setTokens(payload.payload);
+        if (role === "cliente") {
+          setTokens(payload.payload);
+        }
+      })
+      .on("broadcast", { event: "room_closed" }, () => {
+        alert("A sessão foi encerrada pelo Mestre.");
+        router.push("/lobby");
       })
       .subscribe((status) => {
-        if (status === "SUBSCRIBED") {
-          // Pede sync rápido pra quem já tá na sala pra evitar piscar se o DB tiver atrasado
+        if (status === "SUBSCRIBED" && role === "cliente") {
           channel.send({ type: "broadcast", event: "sync_request" });
         }
       });
@@ -106,15 +124,14 @@ export default function Sala() {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [roomId, role]);
+  }, [roomId, role, router]);
 
-  const saveToDatabase = async (newTokens: TokenData[]) => {
-    if (role !== "dev") return; // Só o mestre salva pra não dar conflito (opcional, pode tirar pra cliente salvar tbm)
-    
+  const savePositionToDatabase = async (token: TokenData) => {
+    const table = token.type === "character" ? "characters" : "entities";
     await supabase
-      .from("map_states")
-      .update({ tokens: newTokens })
-      .eq("room_id", roomId);
+      .from(table)
+      .update({ pos_x: token.pos_x, pos_y: token.pos_y })
+      .eq("id", token.id);
   };
 
   const lastBroadcast = useRef(0);
@@ -132,17 +149,17 @@ export default function Sala() {
     }
   }, []);
 
-  // ====== LOGICA DE TOKENS EXISTENTES NO BOARD ======
   const handlePointerDown = (e: React.PointerEvent, token: TokenData) => {
-    if (role === "cliente" && token.owner !== "cliente") return;
+    // Cliente só mexe seus próprios characters, não mexe entities
+    if (role === "cliente" && token.type === "entity") return;
 
     const target = e.currentTarget as HTMLDivElement;
     target.setPointerCapture(e.pointerId);
     
     setDraggingTokenId(token.id);
     dragStartPos.current = {
-      x: e.clientX - token.x,
-      y: e.clientY - token.y,
+      x: e.clientX - token.pos_x,
+      y: e.clientY - token.pos_y,
     };
   };
 
@@ -153,7 +170,7 @@ export default function Sala() {
     const newY = e.clientY - dragStartPos.current.y;
 
     setTokens((prev) =>
-      prev.map((t) => (t.id === draggingTokenId ? { ...t, x: newX, y: newY } : t))
+      prev.map((t) => (t.id === draggingTokenId ? { ...t, pos_x: newX, pos_y: newY } : t))
     );
     
     broadcastMove(draggingTokenId, newX, newY, false);
@@ -167,124 +184,47 @@ export default function Sala() {
     
     const token = tokensRef.current.find(t => t.id === draggingTokenId);
     if (token) {
-      broadcastMove(token.id, token.x, token.y, true);
-      // Salva no banco quando solta o token
-      if (role === "dev" || token.owner === "cliente") {
-        saveToDatabase(tokensRef.current);
-      }
+      broadcastMove(token.id, token.pos_x, token.pos_y, true);
+      savePositionToDatabase(token);
     }
     
     setDraggingTokenId(null);
   };
 
-  // ====== LÓGICA DE SPAWN (PUXAR DA BARRA PARA O BOARD) ======
-  const handleTemplateDown = (e: React.PointerEvent, owner: "dev" | "cliente", color: string) => {
-    const target = e.currentTarget as HTMLDivElement;
-    target.setPointerCapture(e.pointerId);
-    
-    setDragTemplate({ color, owner, clientX: e.clientX, clientY: e.clientY });
-  };
+  const handleCloseRoom = async () => {
+    if (!confirm("Tem certeza que deseja encerrar a sala? Tudo será deletado.")) return;
 
-  const handleTemplateMove = (e: React.PointerEvent) => {
-    if (!dragTemplate) return;
-    setDragTemplate({ ...dragTemplate, clientX: e.clientX, clientY: e.clientY });
-  };
-
-  const handleTemplateUp = (e: React.PointerEvent) => {
-    if (!dragTemplate) return;
-    const target = e.currentTarget as HTMLDivElement;
-    target.releasePointerCapture(e.pointerId);
-
-    if (boardRef.current) {
-      const rect = boardRef.current.getBoundingClientRect();
-      
-      // Checa se soltou em cima do tabuleiro
-      if (
-        e.clientX >= rect.left && e.clientX <= rect.right &&
-        e.clientY >= rect.top && e.clientY <= rect.bottom
-      ) {
-        const dropX = e.clientX - rect.left - 20; 
-        const dropY = e.clientY - rect.top - 20;
-
-        const newToken: TokenData = {
-          id: `token-${Date.now()}`,
-          x: dropX,
-          y: dropY,
-          color: dragTemplate.color,
-          owner: dragTemplate.owner,
-        };
-        
-        const newTokens = [...tokensRef.current, newToken];
-        setTokens(newTokens);
-
-        if (channelRef.current && channelRef.current.state === "joined") {
-          channelRef.current.send({
-            type: "broadcast",
-            event: "sync_response",
-            payload: newTokens,
-          });
-        }
-
-        // Salvar novo estado no banco
-        saveToDatabase(newTokens);
-      }
+    if (channelRef.current) {
+      channelRef.current.send({ type: "broadcast", event: "room_closed" });
     }
-    
-    setDragTemplate(null);
+
+    await fetch(`/api/rooms/${roomId}`, { method: "DELETE" });
+    router.push("/preparar");
   };
 
   if (!role || loading) {
     return <div className="flex h-screen w-screen bg-zinc-900 items-center justify-center text-zinc-500">Carregando tabuleiro...</div>;
   }
 
-  // TELA DA MESA
   return (
     <div className="flex h-screen w-screen bg-zinc-900 overflow-hidden relative">
       
-      {/* CÓDIGO DA SALA (SÓ PARA O MESTRE NO INÍCIO) */}
-      {role === "dev" && roomCode && (
-        <div className="absolute top-4 right-4 bg-zinc-800 text-zinc-200 px-4 py-2 rounded shadow border border-zinc-700 z-50 flex items-center gap-2">
-          <span>Código da Sala:</span>
-          <strong className="text-xl text-red-400 tracking-wider">{roomCode}</strong>
-        </div>
-      )}
-
-      {/* FANTASMA DO TEMPLATE SENDO ARRASTADO */}
-      {dragTemplate && (
-        <div 
-          className={`fixed flex items-center justify-center w-[40px] h-[40px] rounded-full shadow-lg ${dragTemplate.color} z-[100] opacity-90`}
-          style={{
-            left: dragTemplate.clientX - 20,
-            top: dragTemplate.clientY - 20,
-            pointerEvents: 'none'
-          }}
-        />
-      )}
-
-      {/* PAINEL DO MESTRE (SIDEBAR SECA SEM TEXTO) */}
+      {/* HEADER DO MESTRE */}
       {role === "dev" && (
-        <div className="w-16 md:w-20 h-full bg-zinc-950 border-r border-zinc-800 flex flex-col items-center py-4 md:py-8 gap-6 md:gap-8 shadow-xl z-20">
-          <div 
-            onPointerDown={(e) => handleTemplateDown(e, "dev", "bg-black")}
-            onPointerMove={handleTemplateMove}
-            onPointerUp={handleTemplateUp}
-            onPointerCancel={handleTemplateUp}
-            className="w-[40px] h-[40px] rounded-full bg-black shadow-md cursor-grab active:cursor-grabbing touch-none"
-            title="Adicionar bola preta (Dev)"
-          />
-
-          <div 
-            onPointerDown={(e) => handleTemplateDown(e, "cliente", "bg-[#3b0918]")}
-            onPointerMove={handleTemplateMove}
-            onPointerUp={handleTemplateUp}
-            onPointerCancel={handleTemplateUp}
-            className="w-[40px] h-[40px] rounded-full bg-[#3b0918] shadow-md cursor-grab active:cursor-grabbing touch-none"
-            title="Adicionar bola vermelha (Cliente)"
-          />
+        <div className="absolute top-4 right-4 z-50 flex items-center gap-4">
+          {roomCode && (
+            <div className="bg-zinc-800 text-zinc-200 px-4 py-2 rounded shadow border border-zinc-700 flex items-center gap-2">
+              <span>Cód:</span>
+              <strong className="text-xl text-red-400 tracking-wider">{roomCode}</strong>
+            </div>
+          )}
+          <button onClick={handleCloseRoom} className="bg-red-900 hover:bg-red-800 text-white px-4 py-2 rounded shadow font-bold">
+            ENCERRAR SALA
+          </button>
         </div>
       )}
 
-      {/* ÁREA DO GRID (CENTRALIZADA) */}
+      {/* ÁREA DO GRID */}
       <div className="flex-1 flex items-center justify-center relative p-2 md:p-8 touch-none">
         <div 
           ref={boardRef}
@@ -302,16 +242,33 @@ export default function Sala() {
               onPointerMove={handlePointerMove}
               onPointerUp={handlePointerUp}
               onPointerCancel={handlePointerUp}
-              className={`absolute flex items-center justify-center w-[40px] h-[40px] rounded-full select-none touch-none shadow-md ${token.color} ${
+              className={`absolute flex items-center justify-center w-[40px] h-[40px] rounded-full select-none touch-none shadow-lg text-xs font-bold text-white border-2 group ${
                 draggingTokenId === token.id 
                   ? "cursor-grabbing opacity-80 z-50" 
                   : "cursor-grab z-10 transition-transform duration-75"
               }`}
               style={{
-                transform: `translate(${token.x}px, ${token.y}px)`,
-                cursor: role === "cliente" && token.owner !== "cliente" ? "not-allowed" : undefined
+                transform: `translate(${token.pos_x}px, ${token.pos_y}px)`,
+                backgroundColor: token.token_color,
+                borderColor: token.type === 'character' ? '#ffffff44' : '#00000044',
+                cursor: role === "cliente" && token.type === "entity" ? "not-allowed" : undefined
               }}
-            />
+            >
+              {token.label}
+              
+              {/* TOOLTIP DE FICHA (Só aparece pro mestre no hover) */}
+              {role === "dev" && !draggingTokenId && (
+                <div className="hidden group-hover:flex absolute top-12 left-1/2 -translate-x-1/2 bg-zinc-950 border border-zinc-700 text-white p-2 rounded shadow-xl flex-col min-w-[120px] pointer-events-none z-[100]">
+                  <strong className="text-sm truncate">{token.name}</strong>
+                  <div className="text-xs text-zinc-400 flex justify-between mt-1">
+                    <span>HP:</span>
+                    <span className={token.hp < token.max_hp / 2 ? "text-red-400" : "text-green-400"}>
+                      {token.hp}/{token.max_hp}
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
 
         </div>

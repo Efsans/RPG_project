@@ -4,7 +4,7 @@ import crypto from "crypto";
 
 export async function POST(req: Request) {
   try {
-    const { name, password, masterName } = await req.json();
+    const { name, password, masterName, masterPassword } = await req.json();
 
     if (!name || !password || !masterName) {
       return NextResponse.json(
@@ -12,14 +12,28 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
+    
+    // 0. (Opcional extra) Verificar senha do mestre de novo por segurança
+    if (masterPassword && masterPassword !== "amemdoim23") {
+       return NextResponse.json({ error: "Senha de mestre incorreta." }, { status: 403 });
+    }
+
+    // 1. Limpeza de salas velhas (mais de 24h) para não lotar o banco
+    // Usamos uma data de 24 horas atrás
+    const yesterday = new Date();
+    yesterday.setHours(yesterday.getHours() - 24);
+    await supabaseServer
+      .from("rooms")
+      .delete()
+      .lt("created_at", yesterday.toISOString());
 
     // Gerar código de 6 caracteres aleatórios
     const code = crypto.randomBytes(3).toString("hex").toUpperCase();
     
-    // Hash muito simples para a senha (não recomendado para sistemas reais de auth, mas serve pro MVP privado)
+    // Hash da senha
     const passwordHash = crypto.createHash("sha256").update(password).digest("hex");
 
-    // 1. Inserir na tabela rooms
+    // 2. Inserir na tabela rooms
     const { data: room, error: roomError } = await supabaseServer
       .from("rooms")
       .insert({
@@ -36,25 +50,40 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Erro interno ao criar sala." }, { status: 500 });
     }
 
-    // 2. Criar estado inicial do mapa (map_states)
-    const INITIAL_TOKENS = [
-      { id: "npc-1", x: 100, y: 100, color: "bg-black", owner: "dev" },
-      { id: "npc-2", x: 200, y: 100, color: "bg-black", owner: "dev" },
-      { id: "npc-3", x: 300, y: 100, color: "bg-black", owner: "dev" },
-      { id: "player-1", x: 200, y: 300, color: "bg-[#3b0918]", owner: "cliente" },
-    ];
+    // 3. Clonar templates de personagens (PCs) para a sala
+    const { data: charTemplates } = await supabaseServer
+      .from("characters")
+      .select("*")
+      .is("room_id", null);
+      
+    if (charTemplates && charTemplates.length > 0) {
+      const clonedChars = charTemplates.map(t => {
+        const { id, created_at, ...rest } = t;
+        return { ...rest, room_id: room.id };
+      });
+      await supabaseServer.from("characters").insert(clonedChars);
+    }
 
-    const { error: mapError } = await supabaseServer
+    // 4. Clonar templates de entidades (NPCs) para a sala
+    const { data: entityTemplates } = await supabaseServer
+      .from("entities")
+      .select("*")
+      .is("room_id", null);
+      
+    if (entityTemplates && entityTemplates.length > 0) {
+      const clonedEntities = entityTemplates.map(t => {
+        const { id, created_at, updated_at, ...rest } = t;
+        return { ...rest, room_id: room.id };
+      });
+      await supabaseServer.from("entities").insert(clonedEntities);
+    }
+
+    // 5. Criar estado do mapa (sem tokens)
+    await supabaseServer
       .from("map_states")
       .insert({
         room_id: room.id,
-        tokens: INITIAL_TOKENS,
       });
-
-    if (mapError) {
-      console.error("Erro ao criar map_state:", mapError);
-      // Tentamos continuar mesmo assim, o pior que acontece é começar vazio
-    }
 
     return NextResponse.json({ roomId: room.id, code });
   } catch (err) {

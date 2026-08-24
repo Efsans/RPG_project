@@ -276,3 +276,14 @@ netsh advfirewall firewall add rule name="Next.js Dev Server (porta 3000)" dir=i
 | Sincronização offline | Se a internet cair, pausa o RPG |
 | Iluminação 3D / física | Over-engineering para o propósito |
 | Competir com Roll20/Foundry | O objetivo é ser a ferramenta perfeita para ESTA mesa |
+
+---
+
+## 11. Decisões da Fase 2 (Mestre e Entidades)
+
+- **Dois tipos de Entidades:** Manteremos `characters` (para PCs/Jogadores) e `entities` (para NPCs/Monstros/Objetos). Isso facilita a separação e controle de acesso no sistema.
+- **Tokens no Banco:** O posicionamento no mapa (`pos_x`, `pos_y`) e o visual (`token_color`, `label`) passam a existir DIRETAMENTE nas tabelas `characters` e `entities`. O campo `map_states.tokens` será abandonado em favor dessa abordagem relacional.
+- **Persistência Eterna para o Mestre:** O mestre terá um hub seguro para preparar a campanha. Tudo criado na aba `/preparar` será salvo diretamente no Supabase. Utilizaremos o conceito de *templates* (onde `room_id` é `NULL` ou há tabelas dedicadas). O mestre não perderá nada.
+- **UI Assimétrica:** 
+  - O Mestre fica com a interface rica/complexa (configurador de sessão que se mantém ativo, hover nas bolinhas para ver ficha rápida, abas de mídia).
+  - Os Jogadores ficam com uma visão simplificada e focada no mobile (abas fáceis: Mapa, Ficha, Dados).
