@@ -1,18 +1,28 @@
 # Mundo e Lore (Piratas e Cavaleiros)
 
-O cenário da campanha esconde mistérios cósmicos por trás de uma fachada de fantasia. 
+O cenário esconde mistérios cósmicos atrás de uma fachada de fantasia. Este capítulo **não** é regra. É o chão onde as regras pisam.
 
-## O Planeta Principal
-A campanha se passa majoritariamente em um planeta central diversificado, cerca de **1.7x maior que a Terra**. 
-Neste mundo, as barreiras de tempo e tecnologia se misturam em diferentes regiões:
-- **Reinos Medievais Clássicos:** Castelos colossais erguidos em encostas de montanhas, com rios atravessando seus vales.
-- **Nações Marciais:** Reinos que abrigam cavalarias lendárias temidas mundialmente.
-- **Avanços Tecnológicos:** Cidades-estado com tecnologia Steampunk, contrastando fortemente com as regiões agrárias e medievais.
+## O planeta principal
 
-## Os Portais e as Outras Estrelas
-O grande segredo (ou peculiaridade) deste universo é que existem múltiplos planetas habitados. 
-No passado, povos antigos viajaram por esses mundos. Hoje, nas grandes metrópoles e capitais do planeta principal, existem **Portais Antigos**. 
+Campanha majoritariamente num planeta cerca de **1,7× a Terra**. Barreiras de tempo e tecnologia se misturam:
 
-Esses portais conectam o mundo central a planetas distantes, o que explica a presença de raças alienígenas ou extremamente exóticas caminhando lado a lado com humanos.
-- *Exemplo:* O Planeta Desértico (terra natal das Lagostas Humanoides).
-- *Exemplo:* O mundo hostil de onde vieram os ancestrais dos Semideuses estilo Mahoraga.
+- **Reinos medievais:** castelos colossais em encosta, rios nos vales.
+- **Nações marciais:** cavalarias que o mapa inteiro teme.
+- **Cidades-estado a vapor:** steampunk encostado em campo agrário.
+
+## Portais e outras estrelas
+
+Há vários planetas habitados. Povos antigos viajaram. Hoje, nas capitais, restam **Portais Antigos** — daí raças que não nasceram neste chão andarem ao lado de humanos.
+
+- Planeta desértico: terra natal das Lagostas humanoides.
+- Mundo hostil: ancestrais de linhagens **Maho**.
+
+## O Capitão
+
+Não é classe. É um **Espadachim** da história — figura da lore (e, se a mesa quiser, NPC). Técnicas com nome de gente (Olho, Marcas, Explodir) pertencem a ele ou à arma dele, não ao arquétipo.
+
+O **Olho** é a junção das almas de um povo inteiro — magia de alma no extremo, não talento de Espadachim. Ver [magia.md](./magia.md).
+
+## Magia no mundo
+
+O **Grande Conselho** travou a magia na raiz há milênios. Magos disparam IDs de 102 selos. Feiticeiros moldam resto no ar. Almas são mana consciente. A página cheia está em [magia.md](./magia.md).

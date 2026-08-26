@@ -106,23 +106,23 @@ A tela principal do Mestre segue o layout de editor descrito na Seção 1.
 ```
 ┌─────────────────────────────────────────────────────┐
 │  NOME DO PERSONAGEM                    Nível: 1     │
-│  Classe: Capitão          Raça: Humano              │
+│  Classe: Espadachim       Raça: Humano              │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
-│  ██████████████████████░░░░░  HP: 125 / 125         │  ← Barra de vida
+│  ██████████████████████░░░░░  HP: 21 / 21           │  ← Barra de vida
 │                                                     │
-│  IMPULSO  [●] [●] [○]       MARCAS: 14              │  ← Recursos / Trackers
-│  OLHO:  [DESATIVADO] / ATIVO                        │  ← Toggles
+│  FOCO     [●] [●] [●]       VIGOR: 5 / 5            │  ← Recursos / Trackers
+│  POSTURA: [DESATIVADA] / ATIVA                      │  ← Toggles
 │                                                     │
 ├─────────────────────────────────────────────────────┤
 │  ▼ ATRIBUTOS (rolados com dados)                    │
-│    FOR: 14 (+2)   DEX: 12 (+1)   CON: 16 (+3)     │
-│    INT: 18 (+4)   SAB: 10 (+0)   CAR: 8  (-1)     │
+│    FOR: 14 (+2)   DEX: 16 (+3)   CON: 12 (+1)     │
+│    INT: 10 (+0)   SAB: 13 (+1)   CAR: 8  (-1)     │
 │                                                     │
 │  ▼ AÇÕES DE COMBATE                                 │
-│    [ 🗡️ ESTOCADA ]     → Rolar 1d8 + FOR           │
-│    [ 🎯 MARCAR ]        → +1 stack de Marcas        │
-│    [ 💥 EXPLODIR ]      → marcas × (1+INT) × 2     │
+│    [ 🗡️ CORTE ]         → 1d8 + DEX                 │
+│    [ 🛡️ APARAR ]        → Reação, reduz dano        │
+│    [ ⚔️ CONTRA-ATAQUE ] → Reação se o inimigo errar │
 │                                                     │
 │  ▼ LORE / HISTÓRIA                                  │
 │    Campo de texto livre para o jogador escrever     │
@@ -145,10 +145,10 @@ A tela principal do Mestre segue o layout de editor descrito na Seção 1.
 
 #### Mecânicas Customizadas na Ficha
 - **Barras**: HP, e recursos customizáveis.
-- **Trackers de Recursos**: Checkboxes para usos limitados (ex: IMPULSO [●][●][○]).
-- **Contadores de Stacks**: Valor numérico incrementável (ex: MARCAS: 14).
-- **Toggles**: On/Off para estados (ex: OLHO: ATIVO/DESATIVADO).
-- **Botões de Ação**: Cada ação tem uma fórmula vinculada. Ao clicar, executa a fórmula e envia o resultado para o log de combate em broadcast (ex: `💥 CAPITÃO causou 84 de dano!`).
+- **Trackers de Recursos**: Checkboxes para usos limitados (ex: FOCO [●][●][○]).
+- **Contadores de Stacks**: Valor numérico incrementável (ex: VIGOR: 5). Recursos de personagem específico (Marcas, Olho) são JSON da *ficha daquele PC*, não da classe.
+- **Toggles**: On/Off para estados (ex: POSTURA: ATIVA/DESATIVADA).
+- **Botões de Ação**: Cada ação tem uma fórmula vinculada. Ao clicar, executa a fórmula e envia o resultado para o log de combate em broadcast (ex: `💥 ESPADACHIM causou 11 de dano!`).
 
 ---
 

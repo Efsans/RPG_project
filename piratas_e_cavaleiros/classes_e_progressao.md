@@ -1,31 +1,75 @@
 # Classes e Progressão
 
-## Ganho de Experiência (XP)
-O sistema utiliza um ganho de XP padrão. Personagens recebem experiência ao derrotar inimigos e, principalmente, ao completar missões e marcos narrativos definidos pelo Mestre. Ao atingir o limite de XP do nível atual, o personagem "Upa" (sobe de nível).
+Quatro **bases**. O resto do elenco (Paladino, etc.) deriva delas, no espírito de D&D — ainda não escrito. [Junco](./classes/junco.md) é a quinta, em esboço.
 
-## Subindo de Nível (Level Up)
-Ao subir de nível, o personagem recebe melhorias baseadas em sua Classe e Raça.
+| Base | Fantasia | Dado de vida | Vigor | Arquivo |
+|---|---|---|---|---|
+| Guerreiro | Tanque de armadura | 12 + 2d12 | 1d4 + SAB | [guerreiro.md](./classes/guerreiro.md) |
+| Espadachim | Duelo, reação, postura | 10 + 2d10 | 1d6 + SAB | [espadachim.md](./classes/espadachim.md) |
+| Ladino | Furtivo, língua, golpe sujo | 6 + 2d6 | 1d6 | [ladino.md](./classes/ladino.md) |
+| Mago | Elemento, mana, leitura de vitalidade | 6 + 2d6 | 2d8 (mana) | [mago.md](./classes/mago.md) |
 
-### Ganho de Vida (HP)
-- **Nível 1 (Regra do Protagonista):** `(Dado de Vida da Classe × 3) + Modificador de CON`
-- **Níveis Seguintes:** Rola-se `1 Dado de Vida da Classe + Modificador de CON + (Possível Bônus de Raça)`
+**O Capitão** não é classe. É um personagem da lore — um Espadachim específico. Marcas, Olho e Explodir, se aparecerem, são arma/história *dele*, não do arquétipo.
 
-### A Árvore de Habilidades (Talentos e Magias)
-Ao invés de uma loja livre de magias (onde se "compra" o que quiser) ou de um sistema engessado onde todo mundo ganha a mesma coisa, o sistema usa **Trilhas / Árvores de Talentos Semi-lineares**.
+**Feiticeiro** (quando existir) não é Mago com CAR: magia mais solta, mana em CAR, custo ainda na tabela de [magia.md](./magia.md).
 
-- Em determinados níveis, o jogador se depara com encruzilhadas (ex: escolher entre 3 habilidades).
-- O jogador pode optar por adquirir uma habilidade nova ou aprimorar (upar) uma que já possui.
-- **Exclusividade Mútua:** Escolher dominar certas habilidades pode bloquear caminhos opostos (ex: focar na magia de fogo explosiva pode impedir o aprendizado de magias de gelo defensivas). 
-- *Visualização:* Futuramente, na ficha do VTT, isso será desenhado visualmente como uma árvore conectada.
+Cada base no playtest: **2 talentos no nível 1** e **1 encruzilhada no nível 3**. Árvore visual fica para o VTT depois que a mesa rodar.
 
-## As Classes (Arquétipos)
-O mundo utiliza um sistema de classes fixas como blocos de montar, mantendo a base clássica, mas adicionando a temática do mundo.
+---
 
-- **As Clássicas:** Guerreiro, Mago, Ladino mantêm sua essência conhecida (fortemente inspiradas na estrutura de D&D, mas adaptadas à Árvore de Habilidades do nosso sistema).
-- **As Novas (Criações do Mundo):** 
-  - **Espadachim:** Um combatente focado em armas de destreza. Bate com agilidade e é mais resistente do que um Ladino. Usa mecânicas específicas (como o recurso "Marcas").
-  - **Junco:** O equivalente ao Samurai.
-  
-## Sistema de Magia (Mana) e Escolas
-Diferente de sistemas de "Espaços de Magia por dia" (Spell Slots), magos e conjuradores utilizam um **Sistema de Mana (MP)**. 
-- *Nota:* As escolas de magia terão como base inicial o padrão de D&D, mas a *Lore* (a explicação narrativa e as regras místicas de como a magia funciona neste mundo) é customizada e única para "Piratas e Cavaleiros".
+## Experiência
+
+XP se marca **antes**, nunca no improviso do último segundo. Antes da missão começar, ou antes da luta, o mestre escreve o valor. Pode alterar a tabela — a obrigação é ser honesto com o número *antes* dos dados.
+
+### Criaturas (por cabeça, cada PC recebe o valor — mesa de dois, não divide)
+
+| Tipo | XP |
+|---|---|
+| Fraco | 10 |
+| Médio | 20 |
+| Forte ou chefe | 100 ou mais (o mestre escreve o número) |
+
+### Missões, marcos e itens
+
+O mestre escolhe um pacote pela dificuldade da missão e anuncia.
+
+| Dificuldade da missão (guia) | XP sugerido |
+|---|---|
+| Simples / um recado que deu errado | 30 |
+| Padrão de aventureiro | 60 |
+| Feia / várias cenas | 100 |
+| Marco de campanha | 150+ |
+
+Item importante encontrado pode valer um marco pequeno (20–50), se o mestre listou isso antes.
+
+### Tabela de nível (acumulado) — playtest 1–8
+
+| Nível | XP acumulado | Nota |
+|---|---|---|
+| 1 | 0 | |
+| 2 | 100 | Um chefe ou uma missão padrão |
+| 3 | 250 | |
+| 4 | 450 | |
+| 5 | 700 | |
+| 6 | 1000 | |
+| 7 | 1400 | teto da campanha curta começa a apertar |
+| 8 | 1900 | fim do recorte curto |
+| 9–20 | +600 por nível (placeholder) | não balanceado; existe para o VTT não quebrar |
+
+Ao atingir o XP do próximo nível, o personagem **upa** na próxima folga narrativa (não no meio do golpe, salvo o mestre querer cinema).
+
+---
+
+## O que se ganha ao upar
+
+1. **HP:** 1 dado de vida + CON + bônus racial. Pode gastar 1 Foco para rerrolar o dado.
+2. **Vigor / Mana:** 1 dado de vigor da classe + atributo. Idem Foco.
+3. **Foco máximo:** recalcula `base + raça + piso(nível / 3)`.
+4. **Talento:** conforme a classe (encruzilhada no 3; depois a árvore).
+5. Nada de +1 em atributo automático no playtest — isso, se existir, vem de talento ou de marco.
+
+---
+
+## Paladino e outros tanques
+
+Usam o pacote de vida/vigor do Guerreiro (`12 + 2d12`, vigor `1d4 + SAB`) até ganharem página própria. Não copie 5e. Espere a mesa pedir.

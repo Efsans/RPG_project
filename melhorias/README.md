@@ -13,6 +13,7 @@ Não substitui o livro de regras. Serve para **priorizar o que falta**, **corrig
 | [backlog.md](./backlog.md) | Lista priorizada para ir riscando |
 | [visual.md](./visual.md) | Padrão visual, relicário e dados 3D |
 | [nome.md](./nome.md) | Título oficial até segunda ordem |
+| [perguntas_design.md](./perguntas_design.md) | Questionário de fechamento; respostas do autor |
 
 ## Como usar
 
