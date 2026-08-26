@@ -40,12 +40,12 @@ porem o mestre é livre para escolher a dificuldae
 | 2 | [Criação de personagem](./criacao_de_personagem.md) | passo a passo | fechado |
 | 3 | [Atributos, HP, Vigor e Foco](./atributos.md) | números vitais | fechado |
 | 4 | [Combate, defesa ativa e morte](./combate_e_morte.md) | o coração | fechado |
-| 5 | [Classes e progressão](./classes_e_progressao.md) | XP, nível, as quatro bases | fechado (1–8) |
-| 5a | [Espadachim](./classes/espadachim.md) | Aparar, Contra-ataque, Postura | kit 1–3 |
-| 5b | [Guerreiro](./classes/guerreiro.md) | RD e dano corpo a corpo | kit 1–3 |
-| 5c | [Mago](./classes/mago.md) | assinatura e mana | kit 1–3 |
-| 5d | [Ladino](./classes/ladino.md) | charme e agarrão furtivo | kit 1–3 |
-| 5e | [Junco](./classes/junco.md) | samurai, posturas, área | esboço |
+| 5 | [Classes e progressão](./classes_e_progressao.md) | XP, nível, template de ficha | fechado (1–8) |
+| 5a | [Espadachim](./classes/espadachim.md) | Aparar, Contra-ataque, Postura | ficha 1–20 |
+| 5b | [Guerreiro](./classes/guerreiro.md) | RD e dano corpo a corpo | ficha 1–20 |
+| 5c | [Mago](./classes/mago.md) | assinatura e mana | ficha 1–20 |
+| 5d | [Ladino](./classes/ladino.md) | charme e agarrão furtivo | ficha 1–20 |
+| 5e | [Junco](./classes/junco.md) | samurai, posturas, área | ficha (esboço) |
 | 6 | [Raças](./racas.md) | Maho, Humano, Elfo, Zacar, Anão, Meio-Zacar | playtest |
 | 7 | [Inventário e carga](./inventario_e_itens.md) | slots = FOR × 5 | fechado |
 | 8 | [Magia](./magia.md) | mana, 102 selos, Conselho, alma | fechado (grimório ainda não) |

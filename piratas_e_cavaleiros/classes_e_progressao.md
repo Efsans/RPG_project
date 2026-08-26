@@ -2,18 +2,38 @@
 
 Quatro **bases**. O resto do elenco (Paladino, etc.) deriva delas, no espírito de D&D — ainda não escrito. [Junco](./classes/junco.md) é a quinta, em esboço.
 
-| Base | Fantasia | Dado de vida | Vigor | Arquivo |
+O VTT **não hardcoda** classe: o mestre cria pelo painel com o template. Cada arquivo em `classes/` é uma **ficha** para preencher — campos iguais, lista de níveis, ramificações no fim.
+
+| Base | Dado de vida | Vigor / Mana | Foco-base | Arquivo |
 |---|---|---|---|---|
-| Guerreiro | Tanque de armadura | 12 + 2d12 | 1d4 + SAB | [guerreiro.md](./classes/guerreiro.md) |
-| Espadachim | Duelo, reação, postura | 10 + 2d10 | 1d6 + SAB | [espadachim.md](./classes/espadachim.md) |
-| Ladino | Furtivo, língua, golpe sujo | 6 + 2d6 | 1d6 | [ladino.md](./classes/ladino.md) |
-| Mago | Elemento, mana, leitura de vitalidade | 6 + 2d6 | 2d8 (mana) | [mago.md](./classes/mago.md) |
+| Guerreiro | d12 | 1d4 + SAB | 3 | [guerreiro.md](./classes/guerreiro.md) |
+| Espadachim | d10 | 1d6 + SAB | 3 | [espadachim.md](./classes/espadachim.md) |
+| Ladino | d6 | 1d6 | 3 | [ladino.md](./classes/ladino.md) |
+| Mago | d6 | 2d8 + INT (mana) | 2 | [mago.md](./classes/mago.md) |
+| Junco | d10 | 1d6 + SAB | 3 | [junco.md](./classes/junco.md) |
 
 **O Capitão** não é classe. É um personagem da lore — um Espadachim específico. Marcas, Olho e Explodir, se aparecerem, são arma/história *dele*, não do arquétipo.
 
 **Feiticeiro** (quando existir) não é Mago com CAR: magia mais solta, mana em CAR, custo ainda na tabela de [magia.md](./magia.md).
 
-Cada base no playtest: **2 talentos no nível 1** e **1 encruzilhada no nível 3**. Árvore visual fica para o VTT depois que a mesa rodar.
+Playtest: **2 talentos no nível 1** e **1 encruzilhada no nível 3**. O resto da lista (2, 4, 5…) e as ramificações ficam em branco para ir criando.
+
+---
+
+## Template
+
+| Campo | O que é |
+|---|---|
+| Descrição | um parágrafo da fantasia. Classes não têm origens; a descrição faz esse papel |
+| Dado de vida | o dado da classe (d12, d10, d6…) |
+| HP nível 1 | máximo do dado + 2 dados rolados + CON + raça |
+| HP ao upar | 1 dado de vida + CON + raça |
+| Vigor | reserva de técnicas. Marciais usam isto |
+| Mana | só conjurador. No Mago, Vigor **é** Mana. Marcial: — |
+| Foco-base | número da classe, antes de raça e `piso(nível / 3)` |
+| Atributo sugerido | não é mínimo, só o ofício |
+
+Cada ficha tem **tabela de progressão 1–20**, texto por nível (1–8 detalhado, 9–20 compacto) e **ramificações** a partir do 3. Nível vazio = ainda não escrito. Ramificação vazia = caminho para criar depois.
 
 ---
 
@@ -65,7 +85,7 @@ Ao atingir o XP do próximo nível, o personagem **upa** na próxima folga narra
 1. **HP:** 1 dado de vida + CON + bônus racial. Pode gastar 1 Foco para rerrolar o dado.
 2. **Vigor / Mana:** 1 dado de vigor da classe + atributo. Idem Foco.
 3. **Foco máximo:** recalcula `base + raça + piso(nível / 3)`.
-4. **Talento:** conforme a classe (encruzilhada no 3; depois a árvore).
+4. **Talento:** conforme a ficha da classe (nível 3 = ramificação; depois a lista de níveis).
 5. Nada de +1 em atributo automático no playtest — isso, se existir, vem de talento ou de marco.
 
 ---
