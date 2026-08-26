@@ -4,7 +4,7 @@ Siga nesta ordem. Não pule a rolagem: a frustração de um 6 é parte do jogo �
 
 ## 1. Conceito
 
-Uma frase. Classe + raça + o que essa pessoa quer. A classe **sugere** um atributo-chave, mas não trava nada. Mago de combate com FOR alta é legal.
+Uma frase. Classe + raça + o que essa pessoa quer. A classe **sugere** um atributo-chave, mas não trava nada.
 
 ## 2. Raça
 

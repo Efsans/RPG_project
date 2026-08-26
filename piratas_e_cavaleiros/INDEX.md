@@ -15,7 +15,7 @@ Este diretório é o **livro de regras** do sistema. Versão de playtest (mesa d
 3. Role **1d20 + modificador do atributo + bônus** (kit, Foco, habilidade).
 4. Igualar ou superar a CD é sucesso.
 
-**Não há lista de perícias.** O atributo que faz sentido + a interpretação resolvem. Se o personagem tem ferramenta ou treino óbvio na ficha, ganha **+2 de Kit**.
+**Não há lista de perícias.** O atributo que faz sentido + a interpretação resolvem. Se o personagem tem ferramenta ou treino óbvio na ficha, ganha **+2 de bonus** ou se tiver alguma ferramenta util **mais dois**.
 
 | CD | Significado |
 |---|---|
@@ -23,9 +23,10 @@ Este diretório é o **livro de regras** do sistema. Versão de playtest (mesa d
 | 12 | Desafio normal de aventureiro |
 | 16 | Difícil / especializado |
 | 20 | Heroico |
-| 24 | Lendário — em geral precisa de Foco |
+| 24 | impossivel |
+porem o mestre é livre para escolher a dificuldae
 
-**Combate em uma frase:** o atacante rola contra a **Guarda** (`10 + armadura`). Uma vez por rodada, o alvo pode gastar a **Reação** — antes do ataque sair — para **Esquivar** (`1d20 + DEX` contra o ataque) ou **Bloquear** (teste de CON; sucesso reduz o dano).
+**Combate em uma frase:** o atacante rola contra a **Guarda** (`10 + armadura`). Uma vez por rodada, o alvo pode gastar a **Reação** — antes do ataque sair — para **Esquivar** (`1d20 + DEX` o atacante tem que superar a rolagem do defensor) ou **Bloquear** (`1d20 + CON` o defensor deve superara a rolagem do atacante, se ele nao tiver uma armadura pesada ou um item de escudo mesmo com sucesso ele leva metade do dano arredondado para cima ).
 
 **Morte em uma frase:** a 0 HP você está **Morrendo**. Três falhas matam. Sucessos não te levantam — só adiam a morte. Cura precisa cobrir o **dano excedente**, salvo kit médico ou **Dano Massivo**.
 
@@ -57,7 +58,7 @@ Este diretório é o **livro de regras** do sistema. Versão de playtest (mesa d
 
 - **Mesa:** 1 mestre + 2 jogadores. Três é o teto absoluto; o livro não balanceia para isso.
 - **Nível:** campanha curta **1–8**. Teto longo **20**.
-- **Tom:** punitivo com cara de anime. Dano não é baixo. Os heróis são esponjas de dano no nível 1 para aguentar a mão do mestre — um erro ainda custa caro (Borda do Abismo, Dano Massivo, falha crítica).
+- **Tom:** punitivo. Dano não é baixo. Os heróis são esponjas de dano no nível 1 para aguentar a mão do mestre — um erro ainda custa caro (Borda do Abismo, Dano Massivo, falha crítica).
 - **Habilidades de Raça** (não “Despertar”): algumas raças ganham traços por nível — Maho a partir do 2. Ver [raças](./racas.md).
 
 ---
