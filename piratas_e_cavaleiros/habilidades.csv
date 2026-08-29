@@ -1,0 +1,26 @@
+Classe;Nivel;Tipo;Nome da Habilidade;Custo (Vigor/Acao);Descricao;Efeito/Dano Adicional;Requisitos
+Espadachim;1;H. Classe;Aparar;Reação;"Em vez de Esquivar, rola o dano da arma contra o atque do inimigo mitigando o dano equivalenet ao ataque.(funciona apenas contra armas brancas com lamina)";Reduz dado igaul ao dano da arma;-
+Espadachim;1;H. Classe;Contra-ataque;Reação;"Se inimigo errar o ataque em você, faça um ataque nele imediatamente.";Dano normal da arma;-
+Espadachim;1;H. Classe;Postura de Defesa;Ação Principal;"Abdica do ataque para focar em defesa, entrando em uma posturade Guarda  (Guarda vira 10+Armadura+DEX.)";Guarda alterada adicionado modificador de DEX;-
+Espadachim;2;H. Classe;ataque preciso;Ação principal com preparação;em um turno pode se preparar para desferir um ataque com vantagem ignorando a aramdura do inimigo sua defesa diminui em 2 (8 + armadura) se for atacado perde a preparação;ignora a armadura do alvo no teste e no dano;-
+Espadachim;2;P. Classe;trabalho de pés;-;" utilizando da sua agilidade pode se mover atacar e se mover de novo, otimo para sair da distancia dos ataques ";pode se mover apos atacar;-
+Espadachim;2;H. Classe;golpe de oportunidade;1 vigor;faz um golpe rapido no ponto cego do inimigo podendo acertar um ponto vital com mais facilidade ;pode tirara um critico com 18 sem ser natural;-
+Espadachim;3;Arquétipo;;;;;-
+Espadachim;3;Arquétipo;;-;;Reduz 2 dados da arma + Atributo;Arquétipo X
+Espadachim;3;Arquétipo;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+;;;;;;;
+Mago;1;Magia;Raio de Fogo;1 Mana + Principal;Lança fogo pelas mãos num alvo até 9m.;1d10 Fogo;-

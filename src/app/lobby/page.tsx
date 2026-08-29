@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Lobby() {
   const router = useRouter();
@@ -66,17 +67,17 @@ export default function Lobby() {
 
   if (mode === "create") {
     return (
-      <div className="flex h-screen w-screen flex-col items-center justify-center bg-zinc-900 p-4">
-        <form onSubmit={handleCreate} className="flex flex-col gap-4 w-full max-w-sm bg-zinc-800 p-6 rounded-md border border-zinc-700">
-          <h2 className="text-2xl text-zinc-200 text-center mb-2 font-bold">Criar Sala</h2>
-          {error && <p className="text-red-400 text-sm">{error}</p>}
-          <input required placeholder="Nome da Sala" className="p-3 bg-zinc-900 text-zinc-200 border border-zinc-700 rounded" value={roomName} onChange={e => setRoomName(e.target.value)} />
-          <input required placeholder="Seu Nome (Mestre)" className="p-3 bg-zinc-900 text-zinc-200 border border-zinc-700 rounded" value={masterName} onChange={e => setMasterName(e.target.value)} />
-          <input required type="password" placeholder="Senha" className="p-3 bg-zinc-900 text-zinc-200 border border-zinc-700 rounded" value={createPassword} onChange={e => setCreatePassword(e.target.value)} />
-          <button disabled={loading} className="mt-4 p-3 bg-red-900 hover:bg-red-800 text-zinc-200 font-bold rounded">
+      <div className="flex h-screen w-screen flex-col items-center justify-center p-4">
+        <form onSubmit={handleCreate} className="flex flex-col gap-4 w-full max-w-sm surface-panel p-6">
+          <h2 className="font-display text-2xl text-center mb-2">Criar Sala</h2>
+          {error && <p className="text-sm" style={{ color: "#b01c22" }}>{error}</p>}
+          <input required placeholder="Nome da Sala" className="p-3 surface-input" value={roomName} onChange={e => setRoomName(e.target.value)} />
+          <input required placeholder="Seu Nome (Mestre)" className="p-3 surface-input" value={masterName} onChange={e => setMasterName(e.target.value)} />
+          <input required type="password" placeholder="Senha" className="p-3 surface-input" value={createPassword} onChange={e => setCreatePassword(e.target.value)} />
+          <button disabled={loading} className="mt-4 p-3 btn-blood">
             {loading ? "Criando..." : "CRIAR COMO MESTRE"}
           </button>
-          <button type="button" onClick={() => setMode("menu")} className="p-3 text-zinc-400 hover:text-zinc-200">Voltar</button>
+          <button type="button" onClick={() => setMode("menu")} className="p-3 btn-ghost-rpg">Voltar</button>
         </form>
       </div>
     );
@@ -84,41 +85,48 @@ export default function Lobby() {
 
   if (mode === "join") {
     return (
-      <div className="flex h-screen w-screen flex-col items-center justify-center bg-zinc-900 p-4">
-        <form onSubmit={handleJoin} className="flex flex-col gap-4 w-full max-w-sm bg-zinc-800 p-6 rounded-md border border-zinc-700">
-          <h2 className="text-2xl text-zinc-200 text-center mb-2 font-bold">Entrar na Sala</h2>
-          {error && <p className="text-red-400 text-sm">{error}</p>}
-          <input required placeholder="Código da Sala" className="p-3 bg-zinc-900 text-zinc-200 border border-zinc-700 rounded uppercase" maxLength={6} value={roomCode} onChange={e => setRoomCode(e.target.value.toUpperCase())} />
-          <input required type="password" placeholder="Senha" className="p-3 bg-zinc-900 text-zinc-200 border border-zinc-700 rounded" value={joinPassword} onChange={e => setJoinPassword(e.target.value)} />
-          <button disabled={loading} className="mt-4 p-3 bg-zinc-700 hover:bg-zinc-600 text-zinc-200 font-bold rounded">
+      <div className="flex h-screen w-screen flex-col items-center justify-center p-4">
+        <form onSubmit={handleJoin} className="flex flex-col gap-4 w-full max-w-sm surface-panel p-6">
+          <h2 className="font-display text-2xl text-center mb-2">Entrar na Sala</h2>
+          {error && <p className="text-sm" style={{ color: "#b01c22" }}>{error}</p>}
+          <input required placeholder="Código da Sala" className="p-3 surface-input uppercase" maxLength={6} value={roomCode} onChange={e => setRoomCode(e.target.value.toUpperCase())} />
+          <input required type="password" placeholder="Senha" className="p-3 surface-input" value={joinPassword} onChange={e => setJoinPassword(e.target.value)} />
+          <button disabled={loading} className="mt-4 p-3 btn-brass">
             {loading ? "Entrando..." : "ENTRAR COMO JOGADOR"}
           </button>
-          <button type="button" onClick={() => setMode("menu")} className="p-3 text-zinc-400 hover:text-zinc-200">Voltar</button>
+          <button type="button" onClick={() => setMode("menu")} className="p-3 btn-ghost-rpg">Voltar</button>
         </form>
       </div>
     );
   }
 
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center bg-zinc-900 gap-8 p-4">
-      <div className="text-center mb-8">
-        <h1 className="text-4xl text-zinc-200 font-bold tracking-tight">Mesa RPG</h1>
-        <p className="text-zinc-500 mt-2">VTT Privada</p>
+    <div className="flex h-screen w-screen flex-col items-center justify-center gap-8 p-4">
+      <div className="text-center mb-4">
+        <p className="font-display text-xs tracking-[0.4em] uppercase mb-2" style={{ color: "#9c8b6e" }}>
+          NPC
+        </p>
+        <h1 className="font-display text-3xl md:text-4xl max-w-md mx-auto leading-tight">
+          O Navio do Pirata que Cai
+        </h1>
       </div>
       <button 
         onClick={() => setMode("create")}
         style={{ touchAction: 'manipulation' }}
-        className="px-12 py-6 bg-red-900/80 text-zinc-200 text-xl rounded-md border border-red-800 hover:bg-red-800 active:bg-red-700 transition-colors select-none w-full max-w-xs font-bold"
+        className="px-12 py-5 btn-blood text-xl select-none w-full max-w-xs"
       >
         CRIAR SALA
       </button>
       <button 
         onClick={() => setMode("join")}
         style={{ touchAction: 'manipulation' }}
-        className="px-12 py-6 bg-zinc-800 text-zinc-300 text-xl rounded-md border border-zinc-700 hover:bg-zinc-700 active:bg-zinc-600 transition-colors select-none w-full max-w-xs font-bold"
+        className="px-12 py-5 btn-brass text-xl select-none w-full max-w-xs"
       >
         ENTRAR
       </button>
+      <Link href="/reliquia" className="btn-ghost-rpg text-sm mt-4">
+        Relicário dos dados
+      </Link>
     </div>
   );
 }
